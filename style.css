@@ -380,11 +380,13 @@ select {
 .list-section {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .table-container {
     overflow-x: auto;
     padding: 0;
+    width: 100%;
 }
 
 table {

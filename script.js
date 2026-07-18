@@ -219,19 +219,24 @@ sortSelect.addEventListener('change', renderTable);
 
 // Export to JSON
 document.getElementById('btn-export-json').addEventListener('click', () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(stocks, null, 2));
+    const exportData = stocks.map(s => ({
+        ...s,
+        profitLoss: s.sellPrice ? parseFloat(((s.sellPrice - s.buyPrice) * s.quantity).toFixed(2)) : 0
+    }));
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
     downloadFile(dataStr, "mystocks_export.json");
 });
 
 // Export to CSV
 document.getElementById('btn-export-csv').addEventListener('click', () => {
     if(stocks.length === 0) return alert("No data to export!");
-    const headers = ["ID", "Name", "Date", "Quantity", "Buy Price", "Sell Price", "Notes"];
+    const headers = ["ID", "Name", "Date", "Quantity", "Buy Price", "Sell Price", "Profit/Loss", "Notes"];
     const csvRows = [headers.join(',')];
     
     stocks.forEach(s => {
+        const profitLoss = s.sellPrice ? ((s.sellPrice - s.buyPrice) * s.quantity).toFixed(2) : 0;
         const row = [
-            s.id, s.name, s.date, s.quantity, s.buyPrice, s.sellPrice, `"${(s.notes || '').replace(/"/g, '""')}"`
+            s.id, s.name, s.date, s.quantity, s.buyPrice, s.sellPrice, profitLoss, `"${(s.notes || '').replace(/"/g, '""')}"`
         ];
         csvRows.push(row.join(','));
     });
@@ -252,6 +257,7 @@ document.getElementById('btn-export-excel').addEventListener('click', () => {
         Quantity: s.quantity,
         'Buy Price': s.buyPrice,
         'Sell Price': s.sellPrice,
+        'Profit/Loss': s.sellPrice ? parseFloat(((s.sellPrice - s.buyPrice) * s.quantity).toFixed(2)) : 0,
         Notes: s.notes
     }));
     
