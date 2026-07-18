@@ -128,16 +128,18 @@ body {
 }
 
 .profit-card h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 700;
 }
 
 .profit-card h1.positive {
     color: var(--success);
+    word-wrap: break-word;
 }
 
 .profit-card h1.negative {
     color: var(--danger);
+    word-wrap: break-word;
 }
 
 .actions-nav {

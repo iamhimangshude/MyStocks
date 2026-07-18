@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyStocks - Stock Logging</title>
-    
+
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
+
     <!-- SheetJS for Excel -->
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="app-container">
         <!-- Sidebar / Navigation -->
@@ -27,20 +29,27 @@
                 <i class="ph-fill ph-chart-line-up"></i>
                 <h2>MyStocks</h2>
             </div>
-            
+
             <div class="profit-card">
                 <h3>Total Profit / Loss</h3>
                 <h1 id="total-profit">₹0.00</h1>
             </div>
 
+            <div class="profit-card">
+                <h3>Overall Balance</h3>
+                <h1 id="overall-balance">₹0.00</h1>
+            </div>
+
             <nav class="actions-nav">
                 <h3>Actions</h3>
-                <button class="btn btn-outline" id="btn-export-excel"><i class="ph ph-microsoft-excel-logo"></i> Export Excel</button>
+                <button class="btn btn-outline" id="btn-export-excel"><i class="ph ph-microsoft-excel-logo"></i> Export
+                    Excel</button>
                 <button class="btn btn-outline" id="btn-export-csv"><i class="ph ph-file-csv"></i> Export CSV</button>
-                <button class="btn btn-outline" id="btn-export-json"><i class="ph ph-file-code"></i> Export JSON</button>
-                
+                <button class="btn btn-outline" id="btn-export-json"><i class="ph ph-file-code"></i> Export
+                    JSON</button>
+
                 <hr>
-                
+
                 <label for="import-file" class="btn btn-primary import-label">
                     <i class="ph ph-upload-simple"></i> Import Data
                 </label>
@@ -81,7 +90,14 @@
                         <input type="hidden" id="stock-id">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="stock-name">Stock Name</label>
+                                <label for="asset-type">Type</label>
+                                <select id="asset-type">
+                                    <option value="Stock">Stock</option>
+                                    <option value="Option">Option</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="stock-name">Asset Name</label>
                                 <input type="text" id="stock-name" required placeholder="e.g. AAPL">
                             </div>
                             <div class="form-group">
@@ -91,7 +107,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="stock-qty">Quantity</label>
+                                <label for="stock-qty" id="qty-label">Quantity</label>
                                 <input type="number" id="stock-qty" required min="0.01" step="0.01" placeholder="0">
                             </div>
                             <div class="form-group">
@@ -100,7 +116,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="stock-sell">Sell Price (₹)</label>
-                                <input type="number" id="stock-sell" min="0" step="0.01" placeholder="0.00">
+                                <input type="number" id="stock-sell" required min="0" step="0.01" placeholder="0.00">
                             </div>
                         </div>
                         <div class="form-group full-width">
@@ -108,8 +124,10 @@
                             <input type="text" id="stock-notes" placeholder="Optional notes...">
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-primary" id="btn-save-stock"><i class="ph ph-floppy-disk"></i> Save Stock</button>
-                            <button type="button" class="btn btn-outline" id="btn-cancel-edit" style="display: none;"><i class="ph ph-x"></i> Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="btn-save-stock"><i
+                                    class="ph ph-floppy-disk"></i> Save </button>
+                            <button type="button" class="btn btn-outline" id="btn-cancel-edit" style="display: none;"><i
+                                    class="ph ph-x"></i> Cancel</button>
                         </div>
                     </form>
                 </section>
@@ -123,9 +141,10 @@
                         <table id="stock-table">
                             <thead>
                                 <tr>
+                                    <th>Type</th>
                                     <th>Name</th>
                                     <th>Date</th>
-                                    <th>Qty</th>
+                                    <th>Qty / Lots</th>
                                     <th>Buy (₹)</th>
                                     <th>Sell (₹)</th>
                                     <th>Profit (₹)</th>
@@ -150,4 +169,5 @@
     <!-- Custom JS -->
     <script src="script.js"></script>
 </body>
+
 </html>
